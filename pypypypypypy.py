@@ -6,23 +6,42 @@ from pybricks.tools import wait, StopWatch
 
 # Python = me sad
 hub = PrimeHub()
-lMotor = Motor(Port.C, Direction.COUNTERCLOCKWISE)
-rMotor = Motor(Port.D)
-handMotor = Motor(Port.A)
-colorSensor = ColorSensor(Port.B)
-base = DriveBase(lMotor, rMotor, 55.7, 129.8)
+lMotor = Motor(Port.F, Direction.COUNTERCLOCKWISE)
+rMotor = Motor(Port.E)
+rHandMotor = Motor(Port.A)
+lHandMotor = Motor(Port.B, Direction.COUNTERCLOCKWISE)
+colorSensor = ColorSensor(Port.C)
+base = DriveBase(lMotor, rMotor, 55.7, 144)
 base.use_gyro(True)
 yaw = hub.imu
-base.settings(250)
+base.settings(350)
 
 dis = {
-    Color.RED: (90, 100),
-    Color.YELLOW: (90, 50),
-    Color.WHITE: (-90, 100),
-    Color.GREEN: (-90, 50)
+    Color.RED: (90, 420),
+    Color.YELLOW: (90, 310),
+    Color.WHITE: (-90, 450),
+    Color.GREEN: (-90, 340)
 }
 
 def randomization():
+    base.straight(300)
+    base.turn(-90)
+    base.straight(420)
+    base.turn(90)
+    base.straight(125)
+    rHandMotor.run_target(400, -18)
+    base.turn(10)
+    base.straight(40)
+    base.straight(-50)
+    rHandMotor.run_target(400, -176)
+    base.turn(-10)
+    base.straight(-150)
+    base.turn(-90)
+    base.straight(350)
+    base.turn(90)
+    base.straight(705)
+    base.turn(90)
+    base.straight(-100)
     colors = []
     base.straight(190)
     for i in range(0, 6):
@@ -30,53 +49,49 @@ def randomization():
         base.straight(95.5)
         wait(100)
         print(colors)
-    base.settings(450)
+    base.settings(400)
     base.turn(-45)
-    base.straight(275)
+    base.straight(225)
     base.turn(-45)
-    base.straight(-1100)
-    base.straight(980)
+    base.straight(-1075)
+    base.straight(960)
     base.turn(-90)
-    base.settings(250)
+    base.settings(350)
     for i in range(1, 4):
-        print('starting a bunch')
+        #print('starting a bunch')
         currentBunch = i * 2 - 1
-        if colors[currentBunch] == Color.NONE && colors[currentBunch - 1] == Color.NONE:
+        if colors[currentBunch] == Color.NONE and colors[currentBunch - 1] == Color.NONE:
             continue
-        base.straight(-200)
-        base.straight(180 + i * 50)
-        handMotor.run_target(250, -38)
-        base.turn(-60)
-        base.straight(75)
-        handMotor.run_target(250, 0)
-        base.straight(-75)
-        base.turn(60)
-        base.straight(-900)
-        base.straight(500)
+        # base.straight(-200)
+        # base.straight(180 + i * 50)
+        '''
+            Arm stuff
+        '''
+        base.straight(-400 - i * 100)
+        base.straight(525)
         base.turn(90)
-        base.straight(100)
+        base.straight(175)
         index = 0
         for j in range(0, 2):
             shit2 = currentBunch - j
             if colors[shit2] == Color.NONE:
                 continue
-            shit = dis[shit2]
+            shit = dis[colors[shit2]]
             base.turn(shit[0])
             base.straight(shit[1])
             base.turn(-shit[0])
-            base.straight(100)
+            base.straight(500)
             '''
             Arm stuff
             '''
-            base.straight(-100)
+            base.straight(-500)
             base.turn(-shit[0])
             base.straight(shit[1])
             base.turn(shit[0])
         if i <= 2:
-            base.straight(-100)
+            base.straight(-175)
             base.turn(-90)
-            base.straight(-350)
-    base.straight(500)
-    print('Probably ended')
+    base.straight(700)
+    #print('Probably ended')
 
 randomization()
