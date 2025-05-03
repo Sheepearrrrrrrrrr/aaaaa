@@ -4,7 +4,6 @@ from pybricks.parameters import Button, Color, Direction, Port, Side, Stop
 from pybricks.robotics import DriveBase
 from pybricks.tools import wait, StopWatch
 
-# Python = me sad
 hub = PrimeHub()
 lMotor = Motor(Port.F, Direction.COUNTERCLOCKWISE)
 rMotor = Motor(Port.E)
